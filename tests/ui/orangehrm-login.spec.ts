@@ -1,24 +1,15 @@
-import { expect, test } from "@playwright/test";
-import { env } from "../../src/config/env";
+import { test } from "@playwright/test";
+import { LoginPage } from "../../src/pages/LoginPage";
+import { DashboardPage } from "../../src/pages/DashboardPage";
 
-test("OrangeHRM - user can login", async ({ page }) => {
-  await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Login" })).toBeVisible();
+test("OrangeHRM - user can login (POM)", async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  const dashboardPage = new DashboardPage(page);
 
-  const userName = page.getByPlaceholder("username");
-  await userName.pressSequentially("Admin");
+  await loginPage.open();
+  await loginPage.verifyLoginPageIsVisible();
 
-  const password = page.getByPlaceholder("password");
-  await password.pressSequentially("admin123");
+  await loginPage.loginAsAdmin();
 
-  const loginBtn = page.getByRole("button", { name: "Login" });
-  await loginBtn.click();
-
-  await expect(page).toHaveURL(
-    "https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index",
-  );
-
-  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
-
-  //await expect()
+  await dashboardPage.verifyDashboardIsVisible();
 });

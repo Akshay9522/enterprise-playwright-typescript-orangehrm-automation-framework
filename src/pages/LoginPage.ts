@@ -1,10 +1,10 @@
 import { expect, type Page } from "@playwright/test";
+import { env } from "../config/env";
+import { BasePage } from "./BasePage";
 
-export class LoginPage {
-  private page: Page;
-
+export class LoginPage extends BasePage {
   constructor(page: Page) {
-    this.page = page;
+    super(page);
   }
 
   async open() {
@@ -22,5 +22,8 @@ export class LoginPage {
     await this.page.getByPlaceholder("Username").fill(username);
     await this.page.getByPlaceholder("Password").fill(password);
     await this.page.getByRole("button", { name: "Login" }).click();
+  }
+  async loginAsAdmin() {
+    await this.login(env.username, env.password);
   }
 }

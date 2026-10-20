@@ -1,10 +1,9 @@
 import { expect, type Page } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
-export class DashboardPage {
-  private page: Page;
-
+export class DashboardPage extends BasePage {
   constructor(page: Page) {
-    this.page = page;
+    super(page);
   }
 
   async verifyDashboardIsVisible() {

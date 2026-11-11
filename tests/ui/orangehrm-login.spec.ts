@@ -1,12 +1,11 @@
-import { test } from "@playwright/test";
-import { LoginPage } from "../../src/pages/LoginPage";
-import { DashboardPage } from "../../src/pages/DashboardPage";
+import { test } from "../../src/fixtures/pageFixtures";
 
-test("OrangeHRM - user can login (POM)", async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  const dashboardPage = new DashboardPage(page);
-
+test("OrangeHRM - user can login (POM)", async ({
+  loginPage,
+  dashboardPage,
+}) => {
   await loginPage.open();
+
   await loginPage.verifyLoginPageIsVisible();
 
   await loginPage.loginAsAdmin();
